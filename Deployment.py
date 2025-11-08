@@ -3,7 +3,7 @@ import tensorflow as tf
 import numpy as np
 app = Flask(__name__)
 
-model = tf.keras.models.load_model()
+model = tf.keras.models.load_model("Project2/COE379L-Project2/alternate_lenet5_model.keras")
 @app.route('/summary', methods=['GET'])
 def model_summary():
     model_info = []
@@ -22,12 +22,17 @@ def inference():
     try:
         # Read binary image from request
         image_bytes = request.data
-        image = Image.open(BytesIO(image_bytes)).convert('RGB')
+    
+        # 1. Convert to 'L' (grayscale) instead of 'RGB'
+        image = Image.open(BytesIO(image_bytes)).convert('L')
 
-        # Preprocess: resize to model input (150x150)
-        image = image.resize((150, 150))
+        image = image.resize((128, 128))
         image_array = np.array(image) / 255.0
-        image_array = np.expand_dims(image_array, axis=0)  # (1, 150, 150, 3)
+    
+        # 2. Reshape to (1, 128, 128, 1)
+        # When you convert to 'L', np.array(image) has shape (128, 128)
+        # We need to add the batch dimension (1) AND the channel dimension (1)
+        image_array = image_array.reshape((1, 128, 128, 1))
 
         # Make prediction
         pred = model.predict(image_array)
@@ -37,6 +42,8 @@ def inference():
         return jsonify({"prediction": label})
 
     except Exception as e:
+        # Optional: Log the actual error to your console for debugging
+        print(f"An error occurred: {e}") 
         return jsonify({"error": str(e)}), 400
 
 # start the development server
