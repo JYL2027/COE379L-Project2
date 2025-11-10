@@ -14,7 +14,7 @@ def model_summary():
     # [2] Chat GPT Use
     stream = StringIO()
     model.summary(print_fn=lambda x: stream.write(x + "\n"))
-    summary_str = stream.getvalue()
+    summary_str = stream.getvalue().strip()
     
     Metadata = {
         "model_name": model.name,
@@ -26,9 +26,7 @@ def model_summary():
         "output_shape": model.output_shape,
         "optimizer": getattr(model.optimizer, "_name", str(model.optimizer)),
         "loss_function": str(model.loss),
-        "activation_functions": list({layer.activation.__name__ for layer in model.layers if hasattr(layer, "activation")}),
-        "trainable_parameters": sum(tf.size(v).numpy() for v in model.trainable_weights),
-        "non_trainable_parameters": sum(tf.size(v).numpy() for v in model.non_trainable_weights),
+        "activation_functions": list({layer.activation.__name__ for layer in model.layers if hasattr(layer, "activation")})
     }
 
     return jsonify(Metadata)
