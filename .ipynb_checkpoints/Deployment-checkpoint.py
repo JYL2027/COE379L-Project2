@@ -1,29 +1,34 @@
 from flask import Flask, request
 import tensorflow as tf
 import numpy as np
-import datetime
 from flask import jsonify
 from io import BytesIO
 from PIL import Image
+from io import StringIO
 app = Flask(__name__)
 
 model = tf.keras.models.load_model("/model/alternate_lenet5_model.keras")
 
 @app.route('/summary', methods=['GET'])
 def model_summary():
-
+    # [2] Chat GPT Use
+    stream = StringIO()
+    model.summary(print_fn=lambda x: stream.write(x + "\n"))
+    summary_str = stream.getvalue()
+    
     Metadata = {
         "model_name": model.name,
-        "framework": "TensorFlow/Keras",
-        "framework_version": tf.__version__,
-        "created_on": datetime.datetime.now().isoformat(),
-        "input_shape": [None] + list(model.input_shape[1:]),
+        "model_summary": summary_str,
         "num_parameters": model.count_params(),
+        "num_layers": len(model.layers),
         "layers": [layer.__class__.__name__ for layer in model.layers],
-        "optimizer": model.optimizer._name if hasattr(model, "optimizer") else None,
-        "loss_function": model.loss if hasattr(model, "loss") else None,
-        "trainable_params": sum(tf.size(v).numpy() for v in model.trainable_weights),
-        "non_trainable_params": sum(tf.size(v).numpy() for v in model.non_trainable_weights),
+        "input_shape": model.input_shape,
+        "output_shape": model.output_shape,
+        "optimizer": getattr(model.optimizer, "_name", str(model.optimizer)),
+        "loss_function": str(model.loss),
+        "activation_functions": list({layer.activation.__name__ for layer in model.layers if hasattr(layer, "activation")}),
+        "trainable_parameters": sum(tf.size(v).numpy() for v in model.trainable_weights),
+        "non_trainable_parameters": sum(tf.size(v).numpy() for v in model.non_trainable_weights),
     }
 
     return jsonify(Metadata)
@@ -36,7 +41,7 @@ def preprocessing(image_bytes):
         # Read binary image from request
         image_bytes = request.data
     
-        # Convert to 'L' (grayscale) instead of 'RGB'
+        # Convert to 'L' (grayscale)
         image = Image.open(BytesIO(image_bytes)).convert('L')
 
         image = image.resize((128, 128))
