@@ -1,4 +1,4 @@
-FROM python:3.12
+FROM python:3.11
 
 RUN pip install --no-cache-dir tensorflow==2.15 Flask==3.0 Pillow numpy
 
