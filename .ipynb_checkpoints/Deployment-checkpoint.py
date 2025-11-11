@@ -35,23 +35,14 @@ def model_summary():
 def preprocessing(image_bytes):
 
     try:
-
-        # Read binary image from request
-        image_bytes = request.data
-    
-        # Convert to 'L' (grayscale)
         image = Image.open(BytesIO(image_bytes)).convert('L')
-
         image = image.resize((128, 128))
         image_array = np.array(image) / 255.0
-    
-        # Reshape to (1, 128, 128, 1)
         image_array = image_array.reshape((1, 128, 128, 1))
-
         return image_array
-        
-    except Exception:
-        return jsonify({"error": "Invalid image data"})
+    except Exception as e:
+        print("Preprocessing error:", e)
+        return None
 
 @app.route('/inference', methods=['POST'])
 def inference():
