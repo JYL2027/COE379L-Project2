@@ -11,14 +11,10 @@ model = tf.keras.models.load_model("/model/alternate_lenet5_model.keras")
 
 @app.route('/summary', methods=['GET'])
 def model_summary():
-    # [2] Chat GPT Use
-    stream = StringIO()
-    model.summary(print_fn=lambda x: stream.write(x + "\n"))
-    summary_str = stream.getvalue().strip()
     
     Metadata = {
         "model_name": model.name,
-        "model_summary": summary_str,
+        "model_summary": "CNN Lenet-5 Alternative model for classifying Hurrican Harvey building image data (Damage or No Damage)",
         "num_parameters": model.count_params(),
         "num_layers": len(model.layers),
         "layers": [layer.__class__.__name__ for layer in model.layers],
