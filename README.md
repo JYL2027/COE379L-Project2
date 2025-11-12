@@ -32,7 +32,7 @@ The project includes:
 `cd <COE379L-Project2>`
 
 ### Pull Docker Image
-Pull the image using `docker pull jyl2027/hurricane-api`
+Pull the image using `docker pull jyl2027/hurricane-api:latest`
 
 ### Build the Docker Image
 
