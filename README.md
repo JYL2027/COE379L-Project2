@@ -31,6 +31,9 @@ The project includes:
 
 `cd <COE379L-Project2>`
 
+### Pull Docker Image
+Pull the image using `docker pull jyl2027/hurricane-api`
+
 ### Build the Docker Image
 
 Build using the Docker Compose.
@@ -50,10 +53,13 @@ Build using the Docker Compose.
 
 - POST /inference: Classifies a provided image as damage or no_damage.
 
-`curl -X POST localhost:5000/inference "file.jpg"`
+`curl -X POST -F "location of image" localhost:5000/inference`
 
 ### Stop The Server
 
 - When done with the server here is how to stop everything
 
 `docker-compose down`
+
+### Example Executions
+
