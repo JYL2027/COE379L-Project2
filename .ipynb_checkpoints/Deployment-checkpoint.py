@@ -13,16 +13,16 @@ model = tf.keras.models.load_model("/model/alternate_lenet5_model.keras")
 def model_summary():
     
     Metadata = {
-        "model_name": model.name,
-        "model_summary": "CNN Lenet-5 Alternative model for classifying Hurrican Harvey building image data (Damage or No Damage)",
+        "model_name": "Damage_Classifier",
+        "version": "v1",
+        "model_summary": "CNN LeNet-5 Alternative model for classifying Hurrican Harvey building image data (Damage or No Damage)",
         "num_parameters": model.count_params(),
         "num_layers": len(model.layers),
         "layers": [layer.__class__.__name__ for layer in model.layers],
         "input_shape": model.input_shape,
         "output_shape": model.output_shape,
-        "optimizer": getattr(model.optimizer, "_name", str(model.optimizer)),
+        "optimizer": "adam",
         "loss_function": str(model.loss),
-        "activation_functions": list({layer.activation.__name__ for layer in model.layers if hasattr(layer, "activation")})
     }
 
     return jsonify(Metadata)
@@ -43,11 +43,8 @@ def preprocessing(image_bytes):
 @app.route('/inference', methods=['POST'])
 def inference():
     try:
-        if request.files:
-            image_bytes = request.files['image'].read()
-        else:
-            image_bytes = request.data
-            
+        image_bytes = request.files['image'].read()
+        
         image_array = preprocessing(image_bytes)
 
         if image_array is None:
@@ -62,7 +59,6 @@ def inference():
         else:
             label = "no_damage"
 
-        # Return JSON 
         return jsonify({"prediction": label})
 
     except Exception as e:
