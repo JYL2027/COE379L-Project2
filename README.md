@@ -71,6 +71,7 @@ Result: `{
 }`
 
 `curl localhost:5000/summary`
+
 Result: `{
   "input_shape": [
     null,
