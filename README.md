@@ -53,7 +53,7 @@ Build using the Docker Compose.
 
 - POST /inference: Classifies a provided image as damage or no_damage.
 
-`curl -X POST -F "location of image" localhost:5000/inference`
+`curl -X POST -F "image=@damage/example.jpeg" localhost:5000/inference`
 
 ### Stop The Server
 
