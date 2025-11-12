@@ -65,9 +65,10 @@ For the `POST` request, replace "damage/example.jpeg" with the location of the i
 Below are example commands and their results using the outline of the previous section.
 
 `curl -X POST -F "image=@/home/ubuntu/nb-data/Project2/COE379L-Project2/damage/-93.528502_30.987438.jpeg" http://localhost:5000/inference`
+
 Result: `{
   "prediction": "damage"
-}
+}`
 
 `curl localhost:5000/summary`
 Result: `{
