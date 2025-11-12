@@ -6,7 +6,7 @@ services:
     build:
       context: ./
       dockerfile: ./Dockerfile
-    image: jyl2027/hurricane-api:1.0
+    image: jyl2027/hurricane-api:latest
     ports:
       - "5000:5000"
     command: ["python", "api.py"]
