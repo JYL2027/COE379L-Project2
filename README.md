@@ -28,6 +28,7 @@ The project includes:
 # Setup Instructions
 ### Clone the Repository
 `git clone https://github.com/JYL2027/COE379L-Project2.git`
+`git clone git@github.com:JYL2027/COE379L-Project2.git`
 
 `cd <COE379L-Project2>`
 
