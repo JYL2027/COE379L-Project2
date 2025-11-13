@@ -12,10 +12,6 @@ The project includes:
 ## Github Repo Structure
 ```text
 ├── docker-compose.yml
-├── damage
-│   ├── picture files of damaged structures
-├── no_damage
-│   ├── picture files of undamaged structures
 ├── Dockerfile
 ├── Deployment.py
 ├── alternate_lenet5_model.keras
@@ -30,6 +26,7 @@ The project includes:
 `git clone https://github.com/JYL2027/COE379L-Project2.git`
 `git clone git@github.com:JYL2027/COE379L-Project2.git`
 
+Next, please enter the directory pulled from the repository. Now you can insert the images you want to classify into the directory. 
 `cd <COE379L-Project2>`
 
 ### Pull Docker Image
