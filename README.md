@@ -1,9 +1,9 @@
-Project Overview
+## Project Overview
 
-This project builds and deploys convolutional neural networks (CNNs) to classify post-Hurricane Harvey satellite images into damaged or non-damaged building categories.
+This project builds and deploys a convolutional neural network (CNN) to classify post-Hurricane Harvey satellite images into damaged or non-damaged building categories. The goal is to enhance the understanding of hurricane data and to deploy it to unseen satellite images.
 
+## Contents
 The project includes:
-
 1. Data preprocessing and visualization
 2. Model design, training, and evaluation
 3. Model inference server and deployment using Docker
@@ -50,26 +50,28 @@ Build using the Docker Compose.
 
 `curl localhost:5000/summary`
 
-- POST /inference: Classifies a provided image as damage or no_damage.
+- POST /inference: Classifies a provided image as damaged or not damaged.
 
 `curl -X POST -F "image=@damage/example.jpeg" localhost:5000/inference`
-For the `POST` request, replace "damage/example.jpeg" with the location of the image.
+
+For the `POST` request, replace "damage/example.jpeg" with the location of the image you want to apply inference.
 
 ### Stop The Server
 
-- When done with analysis run the following command to take down the server.
+- When completed with the inference analysis, please run the following command to remove and stop the container.
 
 `docker compose down`
 
 ### Example Executions
 Below are example commands and their results using the outline of the previous section.
-
+# Inference
 `curl -X POST -F "image=@/home/ubuntu/nb-data/Project2/COE379L-Project2/damage/-93.528502_30.987438.jpeg" http://localhost:5000/inference`
 
 Result: `{
   "prediction": "damage"
 }`
 
+# Summary
 `curl localhost:5000/summary`
 
 Result: `{
