@@ -9,7 +9,7 @@ The project includes:
 3. Model inference server and deployment using Docker
 4. A written report summarizing the methodology and results
 
-## Github Repo Structure
+## General Github Repo Structure
 ```text
 ├── docker-compose.yml
 ├── Dockerfile
@@ -17,7 +17,7 @@ The project includes:
 ├── alternate_lenet5_model.keras
 ├── Project02_ModelTraining.ipynb
 ├── Project02_Report.pdf
-├── Use_of_AI.md
+├── Use_of_AI.pdf
 └── README.md
 ```
 
